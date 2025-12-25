@@ -1,0 +1,14 @@
+---
+- name: Run show commands on Cisco IOS devices
+  hosts: ciscoIOS
+  gather_facts: false
+  tasks:
+    - name: Run Show Version command
+      cisco.ios.ios_command:
+        commands:
+          - show version
+      register: result
+
+    - name: Show only raw string
+      debug:
+        msg: "{{ result.stdout[0] | regex_findall('Cisco IOS Software.*Version (\\S+)') }}"

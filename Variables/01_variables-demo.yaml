@@ -1,0 +1,74 @@
+---
+- name: Configure Local Username and Password
+  hosts: ciscoIOS
+  gather_facts: false
+  vars:
+      playbook_username: playbook_user
+      playbook_password: playbook_123
+      default_username: playbook_user
+      default_password: playbook_123
+  vars_files:
+    - username_vars.yaml
+  vars_prompt:
+    - name: prompt_username
+      prompt: "Please Enter the local username"
+      private: false
+    - name: prompt_password
+      prompt: "Please Enter the local password"
+      private: true
+
+  #Below are the list of Tasks
+
+  tasks:
+    - name: Display Inventory Variables
+      ansible.builtin.debug:
+        msg: 
+          - Username defined in Inventory file is {{ ansible_user }}
+          - Password defined in Inventory file is {{ ansible_password }}
+
+    - name: Display Playbook Variables
+      ansible.builtin.debug:
+        msg: 
+          - Username defined in Playbook is {{ playbook_username }}
+          - Password defined in Playbook is {{ playbook_password }}
+
+    # - name: Display External Username and password
+    #   ansible.builtin.debug:
+    #     msg: 
+    #       - Username defined in External File is {{ external_username }}
+    #       - Password defined in External File is {{ external_password }}
+
+    - name: Display default Username and password
+      ansible.builtin.debug:
+        msg: 
+          - Default Username is {{ default_username }}
+          - Default Password is {{ default_password }}
+
+    - name: Display Prompt Username and password
+      ansible.builtin.debug:
+        msg: 
+          - Prompt Username is {{ prompt_username }}
+          - Prompt Password is {{ prompt_password }}
+
+    - name: Display default Username and password to understand the precedence
+      ansible.builtin.debug:
+        msg: 
+          - Default Username is {{ default_username }}
+          - Default Password is {{ default_password }}
+
+# # Uncomment below Play to see variable precedence in action
+# - name: Display Variables from Play 1 in Play 2
+#   hosts: ciscoIOS
+#   gather_facts: false
+#   tasks:
+#     - name: Display Inventory Variables
+#       ansible.builtin.debug:
+#         msg: 
+#           - Username defined in Inventory file is {{ ansible_user }}
+#           - Password defined in Inventory file is {{ ansible_password }}
+
+#     - name: Display Playbook Variables
+#       ansible.builtin.debug:
+#         msg: 
+#           - Username defined in Playbook is {{ playbook_username }}
+#           - Password defined in Playbook is {{ playbook_password }}

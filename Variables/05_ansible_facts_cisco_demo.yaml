@@ -1,0 +1,15 @@
+---
+- name: Gather Ansible facts from cisco IOS Devices
+  hosts: ciscoIOS
+  gather_facts: true
+  gather_subset:
+    - all
+  tasks:
+    - name: Display gathered Ansible facts
+      ansible.builtin.debug:
+        msg: 
+          - "{{ ansible_facts }}"
+          - "{{ ansible_facts.net_model }}"
+          - "{{ ansible_facts.net_filesystems_info['flash0:'] }}"
+
+

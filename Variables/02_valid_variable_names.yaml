@@ -1,0 +1,22 @@
+---
+- name: Valid variables Names in ansibke
+  hosts: ciscoIOS
+  gather_facts: false
+  #Valid Variable Names Example::
+  vars:
+    device_hostname: R1
+    interface: GigabitEthernet0/2
+    _IP_address: 192.168.29.100
+  #Invalid Variable Names Example::
+    1hostname: R2
+    lambda: 10.5
+  
+  tasks:
+    - name: Display Variables
+      ansible.builtin.debug:
+        msg:
+          - "{{ device_hostname }}"
+          - "{{ interface }}"
+          - "{{ _IP_address }}"
+          - "{{ 1hostname }}"
+          - "{{ lambda }}"

@@ -1,0 +1,10 @@
+---
+- name: Demo on group_vars and host_vars
+  hosts: ciscoIOS
+  gather_facts: false
+  tasks:
+    - name: Display NTP and DNS Server Info
+      ansible.builtin.debug:
+        msg:
+          - "NTP Server: {{ ntp_server }}"
+          - "DNS Server: {{ dns_server }}"

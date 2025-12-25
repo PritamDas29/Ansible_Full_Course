@@ -1,0 +1,8 @@
+description: |
+      This interface connects to the ISP
+      and handles all incoming and outgoing
+      traffic for the router.
+
+notes: >
+      This configuration is temporary
+      and will be reviewed after the maintenance window.

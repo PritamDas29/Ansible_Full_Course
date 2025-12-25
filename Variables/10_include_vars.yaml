@@ -1,0 +1,24 @@
+---
+# Load the right setup of variables based on the group the host belongs to dynamically.
+- name: Demo on include_vars module
+  hosts: ciscoIOS
+  gather_facts: false
+  tasks:
+    - name: Include cisco Specific Variables if host is in 'cisco' group
+      ansible.builtin.include_vars:
+        file: cisco_include_vars.yaml
+        name: cisco_vars
+      when: "'cisco' in group_names"
+
+    - name: Include arista Specific Variables if host is in 'arista' group
+      ansible.builtin.include_vars:
+        file: arista_include_vars.yaml
+        name: arista_vars
+      when: "'arista' in group_names"
+
+    - name: Display the variables
+      ansible.builtin.debug:
+        msg:
+          - "NTP Server: {{ cisco_vars.ntp_server }}"
+          - "DNS Server: {{ cisco_vars.dns_server }}"
+          - "{{ hostvars }}"

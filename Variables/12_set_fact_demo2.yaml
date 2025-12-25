@@ -1,0 +1,30 @@
+---
+- name: Run show commands on Cisco IOS devices
+  hosts: ciscoIOS
+  gather_facts: false
+  vars:
+    standard_ios_version:
+      - "15.2(4.0.55)E"
+      - "15.6(2)T"
+  tasks:
+    - name: Run Show Version command
+      cisco.ios.ios_command:
+        commands:
+          - show version
+      register: result
+
+    - name: Assign to a Variable
+      ansible.builtin.set_fact:
+        current_ios_version: "{{ result.stdout[0] | regex_findall('Cisco IOS Software.*Version (\\S+)') }}"
+      
+    - name: Display the current IOS version
+      ansible.builtin.debug:
+        var: current_ios_version
+
+    - name: Check if OS Upgrade is required or not  
+      ansible.builtin.set_fact:
+        os_upgrade_required: "{{ current_ios_version < standard_ios_version }}"
+
+    - name: Display if upgrade is required or not
+      ansible.builtin.debug:
+        var: os_upgrade_required

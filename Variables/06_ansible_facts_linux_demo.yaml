@@ -1,0 +1,11 @@
+---
+- name: Gather Ansible facts from cisco IOS Devices
+  hosts: localhost
+  gather_facts: true
+  tasks:
+    - name: Display gathered Ansible facts
+      ansible.builtin.debug:
+        msg: 
+          - "{{ ansible_facts }}"
+          - "{{ ansible_facts.all_ipv4_addresses }}"
+          - "{{ ansible_facts['all_ipv4_addresses'] }}"

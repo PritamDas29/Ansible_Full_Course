@@ -1,0 +1,29 @@
+all:
+  children:
+    cisco:
+      children:
+        ciscoIOS:
+          hosts:
+            R1:
+              ansible_host: 192.168.29.56
+            SW1:
+              ansible_host: 192.168.29.80
+        #ciscoNXOS:
+        #ciscoVIOS:
+    arista:
+      children:
+        aristaEOS:
+          hosts:
+            AR1:
+              ansible_host: 192.168.29.70
+  vars:
+    ansible_connection: network_cli
+    ansible_become: true
+    ansible_become_method: enable
+    ansible_become_password: cisco123
+    ansible_user: cisco
+    ansible_password: cisco123 
+    default_username: inventory_user
+    default_password: inventory_123
+    ntp_server: 1.1.1.1
+    dns_server: 8.8.8.8

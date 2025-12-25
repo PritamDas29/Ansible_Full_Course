@@ -1,0 +1,18 @@
+---
+- name: Run show commands on Cisco IOS devices
+  hosts: ciscoIOS
+  gather_facts: false
+  tasks:
+    - name: Run Show Version command
+      cisco.ios.ios_command:
+        commands:
+          - show version
+      register: result
+
+    - name: Assign to a Variable
+      ansible.builtin.set_fact:
+        current_ios_version: "{{ result.stdout[0] | regex_findall('Cisco IOS Software.*Version (\\S+)') }}"
+      
+    - name: Display the current IOS version
+      ansible.builtin.debug:
+        var: current_ios_version

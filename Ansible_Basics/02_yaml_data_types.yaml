@@ -1,0 +1,7 @@
+#This is a comment for the device configuration
+device:
+  hostname: R1
+  serial number: "FTX1234567"
+  model: Cisco 2901
+  logging_enabled: true
+  timezone: null

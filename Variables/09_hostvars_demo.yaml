@@ -1,0 +1,11 @@
+---
+- name: Demo on Magic hostvars Variable
+  hosts: ciscoIOS
+  gather_facts: false
+  tasks:
+    - name: Display hostvars
+      ansible.builtin.debug:
+        msg:
+          - "{{ hostvars }}" 
+          - " DNS Server for {{ inventory_hostname }} is {{ hostvars[inventory_hostname]['dns_server'] }}"
+          - " DNS Server for SW1 is {{ hostvars['SW1']['dns_server'] }}"

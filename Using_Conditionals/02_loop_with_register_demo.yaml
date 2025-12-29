@@ -1,0 +1,33 @@
+---
+- name: Registering Variables with a loop 
+  hosts: ciscoIOS
+  gather_facts: false
+  vars:
+    interfaces:
+      - name: Ethernet0/0
+        description: Uplink to ISP
+        ip_address: 10.10.10.100
+        subnet_mask: 255.255.255.0
+
+      - name: Ethernet0/1
+        description: Internal Network
+        ip_address: 1.1.1.1
+        subnet_mask: 255.255.255.0
+
+  tasks:
+    - name: Fetch interface traffic and assign to a variable
+      cisco.ios.ios_command:
+        commands:
+          - "show interface {{ item.name }} | include rate"
+      register: interface_rate
+      loop: "{{ interfaces }}"
+
+    - name: Display interface_rate variable
+      ansible.builtin.debug:
+        var: interface_rate
+
+    - name: Loop over the registered variable to display interface traffic
+      ansible.builtin.debug:
+        msg: "{{ item.stdout[0]}}"
+      loop: "{{ interface_rate.results }}"
+
